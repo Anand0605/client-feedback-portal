@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const AdminDashboard = () => {
   const [feedbacks, setFeedbacks] = useState([]);
   const [filter, setFilter] = useState('');
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,8 +16,14 @@ const AdminDashboard = () => {
     }
 
     const fetchData = async () => {
-      const res = await axios.get('http://localhost:5000/api/all-feedback');
-      setFeedbacks(res.data);
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/all-feedback`);
+        setFeedbacks(res.data);
+      } catch (err) {
+        console.error('Error fetching feedbacks:', err);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchData();
@@ -27,14 +34,13 @@ const AdminDashboard = () => {
     navigate('/admin-login');
   };
 
-  const filteredFeedback = feedbacks.filter(fb => {
-    if (!filter) return true;
-    return fb.service === filter;
-  });
+  const filteredFeedback = feedbacks.filter(fb =>
+    !filter ? true : fb.service === filter
+  );
 
   return (
     <div className="min-h-screen bg-gray-50 p-4">
-      <div className="max-w-4xl mx-auto bg-white shadow-md rounded-xl p-6 space-y-6">
+      <div className="max-w-4xl mx-auto bg-white shadow-md rounded-xl p-6 space-y-6 animate-fade-in">
         <div className="flex justify-between items-center">
           <h2 className="text-2xl font-bold text-blue-600">Admin Dashboard</h2>
           <button
@@ -59,23 +65,27 @@ const AdminDashboard = () => {
           </select>
         </div>
 
-        <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-blue-300">
-          {filteredFeedback.length === 0 ? (
-            <p className="text-gray-500 italic">No feedback found.</p>
-          ) : (
-            filteredFeedback.map(fb => (
-              <div key={fb._id} className="bg-gray-100 rounded-lg p-4 shadow-sm">
-                <div className="flex justify-between items-center mb-1">
-                  <h3 className="font-semibold text-blue-700">{fb.name}</h3>
-                  <span className="text-yellow-600 font-medium">⭐ {fb.rating}</span>
+        {loading ? (
+          <p className="text-center text-blue-500 font-medium">Loading feedbacks...</p>
+        ) : (
+          <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-blue-300">
+            {filteredFeedback.length === 0 ? (
+              <p className="text-gray-500 italic">No feedback found.</p>
+            ) : (
+              filteredFeedback.map(fb => (
+                <div key={fb._id} className="bg-gray-100 rounded-lg p-4 shadow-sm">
+                  <div className="flex justify-between items-center mb-1">
+                    <h3 className="font-semibold text-blue-700">{fb.name}</h3>
+                    <span className="text-yellow-600 font-medium">⭐ {fb.rating}</span>
+                  </div>
+                  <p className="text-sm text-gray-700"><strong>Email:</strong> {fb.email}</p>
+                  <p className="text-sm text-gray-700"><strong>Service:</strong> {fb.service}</p>
+                  <p className="text-gray-600 italic mt-2">{fb.comments}</p>
                 </div>
-                <p className="text-sm text-gray-700"><strong>Email:</strong> {fb.email}</p>
-                <p className="text-sm text-gray-700"><strong>Service:</strong> {fb.service}</p>
-                <p className="text-gray-600 italic mt-2">{fb.comments}</p>
-              </div>
-            ))
-          )}
-        </div>
+              ))
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

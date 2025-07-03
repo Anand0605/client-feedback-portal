@@ -13,7 +13,8 @@ const FeedbackForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/submit-feedback', form);
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/submit-feedback`, form);
+;
       alert('Feedback Submitted!');
       setForm({ name: '', email: '', service: '', rating: 5, comments: '' });
     } catch (err) {
