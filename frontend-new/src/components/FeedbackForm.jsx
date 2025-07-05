@@ -14,6 +14,8 @@ const FeedbackForm = () => {
     e.preventDefault();
     try {
       await axios.post(`${import.meta.env.VITE_API_BASE_URL}/submit-feedback`, form);
+      console.log("Posting to:", `${import.meta.env.VITE_API_BASE_URL}/submit-feedback`);
+
 ;
       alert('Feedback Submitted!');
       setForm({ name: '', email: '', service: '', rating: 5, comments: '' });
