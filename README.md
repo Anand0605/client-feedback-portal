@@ -1,5 +1,23 @@
 # 📝 Client Feedback Portal
 
+A full-stack feedback collection web app built with React, Node.js, Express, and MongoDB — deployed on Netlify and Render.
+
+---
+
+## 🌐 Live Links
+
+- 🔗 **Frontend (Netlify)**: [https://client-feedback-05.netlify.app](https://client-feedback-05.netlify.app)
+- 🔗 **Backend (Render API)**: [https://client-feedback-api.onrender.com/api/all-feedback](https://client-feedback-api.onrender.com/api/all-feedback)
+
+---
+
+## 📸 Preview
+
+> 💡 Add screenshots in the `screenshots/` folder and link here:
+
+
+# 📝 Client Feedback Portal
+
 A full-stack web application where clients can submit feedback for company services. Includes a secure admin panel to view and filter all feedback.
 
 ---
@@ -96,3 +114,42 @@ Setup Frontend
 cd ../frontend
 npm install
 npm run dev
+
+
+---
+
+## 🚀 Features
+
+- ✅ Client feedback form (name, email, service, rating, comment)
+- ✅ Admin login (localStorage based)
+- ✅ Admin dashboard to view all feedback
+- ✅ Filter feedback by service
+- ✅ Responsive, mobile-friendly design
+- ✅ Tailwind CSS styled
+- ✅ Live backend (Render) and frontend (Netlify)
+
+---
+
+## 🛠️ Tech Stack
+
+**Frontend**
+- React.js (Vite)
+- Tailwind CSS
+- React Router DOM
+- Axios
+
+**Backend**
+- Node.js
+- Express.js
+- MongoDB (Mongoose)
+- dotenv
+- CORS
+
+**Deployment**
+- 🚀 Render (API backend)
+- 🌐 Netlify (Frontend)
+
+---
+
+## 🧾 Folder Structure
+
