@@ -9,7 +9,7 @@ const app = express();
 
 // ✅ Allow specific frontend origin (Netlify)
 app.use(cors({
-  origin: 'https://your-netlify-site.netlify.app',
+  origin: 'https://client-feedback-05.netlify.app',
   credentials: true
 }));
 
